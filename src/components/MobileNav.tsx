@@ -1,5 +1,5 @@
 import React from 'react';
-import { TabType, UserProfile } from '../types';
+import { TabType, UserProfile, getInitials } from '../types';
 
 interface MobileNavProps {
   currentTab: TabType;
@@ -7,6 +7,7 @@ interface MobileNavProps {
   user: UserProfile;
   title?: string;
   onOpenProfileModal?: () => void;
+  onLogout?: () => void;
 }
 
 export const MobileNav: React.FC<MobileNavProps> = ({
@@ -15,6 +16,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({
   user,
   title,
   onOpenProfileModal,
+  onLogout,
 }) => {
   return (
     <>
@@ -26,24 +28,34 @@ export const MobileNav: React.FC<MobileNavProps> = ({
               airport_shuttle
             </span>
           </div>
-          <h1 className="text-[18px] font-bold text-[#004ccd] tracking-tight">
+          <h1 className="text-[18px] font-bold text-[#004ccd] tracking-tight truncate max-w-[170px] sm:max-w-none">
             {title || 'AntarJemputKu'}
           </h1>
         </div>
 
-        <button
-          onClick={onOpenProfileModal}
-          className="flex items-center gap-1.5 focus:outline-none cursor-pointer"
-          aria-label="User Profile"
-        >
-          <div className="w-8 h-8 rounded-full bg-[#0f62fe] text-white flex items-center justify-center font-bold text-[12px] shadow-xs overflow-hidden border border-[#E2E8F0]">
-            {user.avatarUrl ? (
-              <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover" />
-            ) : (
-              'UP'
-            )}
-          </div>
-        </button>
+        <div className="flex items-center gap-2">
+          {/* Parent Profile Initials Avatar */}
+          <button
+            onClick={onOpenProfileModal}
+            className="w-9 h-9 rounded-full bg-[#0f62fe] text-white flex items-center justify-center font-bold text-[13px] tracking-wider shadow-xs border border-[#0f62fe] active:scale-95 transition-all cursor-pointer"
+            aria-label="User Profile"
+            title={`Profil: ${user.name}`}
+          >
+            {getInitials(user.name)}
+          </button>
+
+          {/* Logout Icon next to Profile */}
+          {onLogout && (
+            <button
+              onClick={onLogout}
+              className="w-9 h-9 rounded-full bg-[#fff5f5] hover:bg-[#ffdad6] text-[#ba1a1a] border border-[#ffdad6] flex items-center justify-center active:scale-95 transition-all cursor-pointer"
+              aria-label="Logout"
+              title="Keluar"
+            >
+              <span className="material-symbols-outlined text-[18px]">logout</span>
+            </button>
+          )}
+        </div>
       </header>
 
       {/* Mobile Bottom Navigation */}

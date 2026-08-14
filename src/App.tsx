@@ -442,6 +442,10 @@ export default function App() {
           user={user}
           title={tabTitles[currentTab]}
           onOpenProfileModal={() => setCurrentTab('pricing')}
+          onLogout={async () => {
+            await signOutUser();
+            setCurrentUserId(null);
+          }}
         />
 
         {/* Database Quick Action Banner if database is newly initialized */}

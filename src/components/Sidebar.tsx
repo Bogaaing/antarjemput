@@ -1,5 +1,5 @@
 import React from 'react';
-import { TabType, UserProfile } from '../types';
+import { TabType, UserProfile, getInitials } from '../types';
 
 interface SidebarProps {
   currentTab: TabType;
@@ -68,11 +68,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
       <div className="mt-auto px-5 pt-4 border-t border-[#E2E8F0]/80">
         <div className="flex items-center justify-between gap-3 bg-white/80 p-2.5 rounded-xl border border-[#E2E8F0]">
           <div className="flex items-center gap-2.5 overflow-hidden">
-            <img
-              src={user.avatarUrl}
-              alt={user.name}
-              className="w-9 h-9 rounded-full object-cover border border-[#E2E8F0] shrink-0"
-            />
+            <div className="w-9 h-9 rounded-full bg-[#0f62fe] text-white flex items-center justify-center font-bold text-[13px] tracking-wider shrink-0 border border-[#0f62fe] shadow-xs">
+              {getInitials(user.name)}
+            </div>
             <div className="truncate">
               <p className="text-[13px] font-semibold text-[#191b24] truncate leading-snug">{user.name}</p>
               <p className="text-[11px] text-[#737687] truncate">{user.role}</p>
