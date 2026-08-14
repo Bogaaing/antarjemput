@@ -1,0 +1,6 @@
+{
+  "name": "AntarJemputKu",
+  "description": "Family school transport and shuttle logistics monitoring app with daily scheduling, multi-child coordination, automatic pricing breakdown, payment tracking, and WhatsApp sharing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
