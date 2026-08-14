@@ -34,6 +34,9 @@ import { AddScheduleModal } from './components/AddScheduleModal';
 import { TransactionDetailModal } from './components/TransactionDetailModal';
 import { ShareInvoiceModal } from './components/ShareInvoiceModal';
 import { ChildEditModal } from './components/ChildEditModal';
+import { OfflineIndicator } from './components/pwa/OfflineIndicator';
+import { InstallPrompt } from './components/pwa/InstallPrompt';
+import { UpdatePrompt } from './components/pwa/UpdatePrompt';
 
 const DEFAULT_PROFILE: UserProfile = {
   name: 'Orang Tua',
@@ -407,6 +410,11 @@ export default function App() {
 
   return (
     <div className="bg-[#F4F7FB] text-[#191b24] min-h-screen flex flex-col md:flex-row antialiased selection:bg-[#0f62fe]/20">
+      {/* PWA Components */}
+      <OfflineIndicator />
+      <InstallPrompt />
+      <UpdatePrompt />
+
       {/* Toast Notifications */}
       {actionError && (
         <div className="fixed top-4 right-4 z-50 bg-[#fff5f5] border border-[#ffdad6] text-[#ba1a1a] px-4 py-3 rounded-xl shadow-lg flex items-center gap-2 text-[14px] font-semibold animate-fadeIn max-w-md">

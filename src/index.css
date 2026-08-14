@@ -132,5 +132,18 @@
 }
 
 .pb-safe {
-  padding-bottom: max(1rem, env(safe-area-inset-bottom, 1rem));
+  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
 }
+
+.pt-safe {
+  padding-top: calc(0.75rem + env(safe-area-inset-top, 0px));
+}
+
+/* Prevent tap highlight flicker & disable pull-to-refresh on standalone app shell */
+@media (display-mode: standalone) {
+  html, body {
+    overscroll-behavior-y: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
