@@ -22,8 +22,11 @@ const envAnonKey =
 const storedUrl = typeof window !== 'undefined' ? localStorage.getItem('supabase_custom_url') || '' : '';
 const storedAnonKey = typeof window !== 'undefined' ? localStorage.getItem('supabase_custom_key') || '' : '';
 
-export const SUPABASE_URL = storedUrl || envUrl;
-export const SUPABASE_ANON_KEY = storedAnonKey || envAnonKey;
+const DEFAULT_URL = 'https://njngcjikiquapklcsuzm.supabase.co';
+const DEFAULT_ANON_KEY = 'sb_publishable_gRthQwR10q3iWM2zfxF-kw_MacrUZhW';
+
+export const SUPABASE_URL = storedUrl || envUrl || DEFAULT_URL;
+export const SUPABASE_ANON_KEY = storedAnonKey || envAnonKey || DEFAULT_ANON_KEY;
 
 export const isSupabaseConfigured = (): boolean => {
   return (
