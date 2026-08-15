@@ -34,6 +34,7 @@ import { AddScheduleModal } from './components/AddScheduleModal';
 import { TransactionDetailModal } from './components/TransactionDetailModal';
 import { ShareInvoiceModal } from './components/ShareInvoiceModal';
 import { ChildEditModal } from './components/ChildEditModal';
+import { ChildDetailBottomSheet } from './components/ChildDetailBottomSheet';
 import { DateDetailBottomSheet } from './components/DateDetailBottomSheet';
 import { OfflineIndicator } from './components/pwa/OfflineIndicator';
 import { InstallPrompt } from './components/pwa/InstallPrompt';
@@ -88,6 +89,7 @@ export default function App() {
 
   const [isChildModalOpen, setIsChildModalOpen] = useState(false);
   const [editingChild, setEditingChild] = useState<Child | null>(null);
+  const [selectedChildForDetail, setSelectedChildForDetail] = useState<Child | null>(null);
 
   // Auto clear notifications after 4s
   useEffect(() => {
@@ -405,9 +407,9 @@ export default function App() {
   const tabTitles: { [key in TabType]: string } = {
     calendar: 'AntarJemputKu',
     history: `Rekap ${currentMonthName}`,
-    children: 'Children Management',
-    pricing: 'Pricing Rules',
-    reports: 'Reports',
+    children: 'Anak Saya',
+    pricing: 'Pengaturan',
+    reports: 'Laporan',
   };
 
   return (
@@ -526,6 +528,9 @@ export default function App() {
                     setEditingChild(child);
                     setIsChildModalOpen(true);
                   }}
+                  onViewChildDetail={(child) => {
+                    setSelectedChildForDetail(child);
+                  }}
                   onDeleteChild={handleDeleteChild}
                 />
               )}
@@ -600,6 +605,19 @@ export default function App() {
             setIsChildModalOpen(false);
             setEditingChild(null);
           }}
+        />
+      )}
+
+      {/* Quick Child Detail Bottom Sheet */}
+      {selectedChildForDetail && (
+        <ChildDetailBottomSheet
+          child={selectedChildForDetail}
+          onClose={() => setSelectedChildForDetail(null)}
+          onEdit={(child) => {
+            setEditingChild(child);
+            setIsChildModalOpen(true);
+          }}
+          onDelete={handleDeleteChild}
         />
       )}
 
