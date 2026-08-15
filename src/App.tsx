@@ -34,6 +34,7 @@ import { AddScheduleModal } from './components/AddScheduleModal';
 import { TransactionDetailModal } from './components/TransactionDetailModal';
 import { ShareInvoiceModal } from './components/ShareInvoiceModal';
 import { ChildEditModal } from './components/ChildEditModal';
+import { DateDetailBottomSheet } from './components/DateDetailBottomSheet';
 import { OfflineIndicator } from './components/pwa/OfflineIndicator';
 import { InstallPrompt } from './components/pwa/InstallPrompt';
 import { UpdatePrompt } from './components/pwa/UpdatePrompt';
@@ -82,6 +83,7 @@ export default function App() {
   const [editingRecord, setEditingRecord] = useState<DailyTransportRecord | null>(null);
 
   const [selectedRecordId, setSelectedRecordId] = useState<string | null>(null);
+  const [selectedDateForSheet, setSelectedDateForSheet] = useState<string | null>(null);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
   const [isChildModalOpen, setIsChildModalOpen] = useState(false);
@@ -495,12 +497,7 @@ export default function App() {
                     setCurrentMonth(now.getMonth());
                   }}
                   onSelectDate={(dateStr) => {
-                    const rec = records.find((r) => r.date === dateStr);
-                    if (rec) {
-                      setSelectedRecordId(rec.id);
-                    } else {
-                      handleOpenAddModal(dateStr);
-                    }
+                    setSelectedDateForSheet(dateStr);
                   }}
                   onOpenAddModal={handleOpenAddModal}
                 />
@@ -603,6 +600,20 @@ export default function App() {
             setIsChildModalOpen(false);
             setEditingChild(null);
           }}
+        />
+      )}
+
+      {/* Date Detail Bottom Sheet */}
+      {selectedDateForSheet && (
+        <DateDetailBottomSheet
+          dateStr={selectedDateForSheet}
+          record={records.find((r) => r.date === selectedDateForSheet) || null}
+          childrenList={childrenList}
+          onClose={() => setSelectedDateForSheet(null)}
+          onAddTransaction={handleOpenAddModal}
+          onEditTransaction={handleEditFromDetail}
+          onTogglePayment={handleTogglePayment}
+          onDeleteTransaction={handleDeleteRecord}
         />
       )}
     </div>

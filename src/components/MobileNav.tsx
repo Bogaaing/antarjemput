@@ -14,22 +14,21 @@ export const MobileNav: React.FC<MobileNavProps> = ({
   currentTab,
   onSelectTab,
   user,
-  title,
   onOpenProfileModal,
   onLogout,
 }) => {
   return (
     <>
-      {/* Mobile Top Header */}
-      <header className="flex justify-between items-center w-full px-4 py-3.5 bg-white border-b border-[#E2E8F0] md:hidden sticky top-0 z-30 shadow-xs">
+      {/* Mobile Top Header (64-72px compact) */}
+      <header className="flex justify-between items-center w-full px-4 py-3.5 bg-white border-b border-[#E2E8F0] md:hidden sticky top-0 z-30 shadow-xs h-[64px]">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-[#0f62fe] text-white flex items-center justify-center font-bold text-sm shadow-xs">
-            <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>
-              airport_shuttle
+          <div className="w-9 h-9 rounded-xl bg-[#0f62fe] text-white flex items-center justify-center font-bold shadow-xs shrink-0">
+            <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>
+              directions_car
             </span>
           </div>
-          <h1 className="text-[18px] font-bold text-[#004ccd] tracking-tight truncate max-w-[170px] sm:max-w-none">
-            {title || 'AntarJemputKu'}
+          <h1 className="text-[19px] font-bold text-[#004ccd] tracking-tight truncate">
+            AntarJemputKu
           </h1>
         </div>
 
@@ -37,18 +36,18 @@ export const MobileNav: React.FC<MobileNavProps> = ({
           {/* Parent Profile Initials Avatar */}
           <button
             onClick={onOpenProfileModal}
-            className="w-9 h-9 rounded-full bg-[#0f62fe] text-white flex items-center justify-center font-bold text-[13px] tracking-wider shadow-xs border border-[#0f62fe] active:scale-95 transition-all cursor-pointer"
+            className="w-9 h-9 rounded-full bg-[#004ccd] text-white flex items-center justify-center font-bold text-[13px] tracking-wider shadow-xs border border-[#004ccd] active:scale-95 transition-transform cursor-pointer"
             aria-label="User Profile"
             title={`Profil: ${user.name}`}
           >
             {getInitials(user.name)}
           </button>
 
-          {/* Logout Icon next to Profile */}
+          {/* Logout Icon */}
           {onLogout && (
             <button
               onClick={onLogout}
-              className="w-9 h-9 rounded-full bg-[#fff5f5] hover:bg-[#ffdad6] text-[#ba1a1a] border border-[#ffdad6] flex items-center justify-center active:scale-95 transition-all cursor-pointer"
+              className="w-9 h-9 rounded-full bg-[#fff5f5] hover:bg-[#ffdad6] text-[#ba1a1a] border border-[#ffdad6]/60 flex items-center justify-center active:scale-95 transition-transform cursor-pointer"
               aria-label="Logout"
               title="Keluar"
             >
@@ -63,10 +62,10 @@ export const MobileNav: React.FC<MobileNavProps> = ({
         <button
           id="nav-mobile-calendar"
           onClick={() => onSelectTab('calendar')}
-          className={`flex flex-col items-center justify-center px-3 py-1 rounded-xl transition-all scale-95 active:scale-90 w-1/4 cursor-pointer ${
+          className={`flex flex-col items-center justify-center px-2 py-1 rounded-xl transition-all scale-95 active:scale-90 w-1/4 cursor-pointer relative ${
             currentTab === 'calendar'
-              ? 'bg-[#0f62fe] text-white shadow-xs'
-              : 'text-[#424656] hover:bg-[#f2f3ff]'
+              ? 'text-[#004ccd] font-bold'
+              : 'text-[#424656] hover:text-[#191b24]'
           }`}
         >
           <span
@@ -75,16 +74,19 @@ export const MobileNav: React.FC<MobileNavProps> = ({
           >
             calendar_today
           </span>
-          <span className="text-[11px] font-semibold">Calendar</span>
+          <span className="text-[11px]">Kalender</span>
+          {currentTab === 'calendar' && (
+            <span className="absolute bottom-0 w-8 h-0.5 bg-[#004ccd] rounded-full"></span>
+          )}
         </button>
 
         <button
           id="nav-mobile-history"
           onClick={() => onSelectTab('history')}
-          className={`flex flex-col items-center justify-center px-3 py-1 rounded-xl transition-all scale-95 active:scale-90 w-1/4 cursor-pointer ${
+          className={`flex flex-col items-center justify-center px-2 py-1 rounded-xl transition-all scale-95 active:scale-90 w-1/4 cursor-pointer relative ${
             currentTab === 'history'
-              ? 'bg-[#0f62fe] text-white shadow-xs'
-              : 'text-[#424656] hover:bg-[#f2f3ff]'
+              ? 'text-[#004ccd] font-bold'
+              : 'text-[#424656] hover:text-[#191b24]'
           }`}
         >
           <span
@@ -93,34 +95,40 @@ export const MobileNav: React.FC<MobileNavProps> = ({
           >
             history
           </span>
-          <span className="text-[11px] font-semibold">History</span>
+          <span className="text-[11px]">Riwayat</span>
+          {currentTab === 'history' && (
+            <span className="absolute bottom-0 w-8 h-0.5 bg-[#004ccd] rounded-full"></span>
+          )}
         </button>
 
         <button
           id="nav-mobile-children"
           onClick={() => onSelectTab('children')}
-          className={`flex flex-col items-center justify-center px-3 py-1 rounded-xl transition-all scale-95 active:scale-90 w-1/4 cursor-pointer ${
+          className={`flex flex-col items-center justify-center px-2 py-1 rounded-xl transition-all scale-95 active:scale-90 w-1/4 cursor-pointer relative ${
             currentTab === 'children'
-              ? 'bg-[#0f62fe] text-white shadow-xs'
-              : 'text-[#424656] hover:bg-[#f2f3ff]'
+              ? 'text-[#004ccd] font-bold'
+              : 'text-[#424656] hover:text-[#191b24]'
           }`}
         >
           <span
             className="material-symbols-outlined text-[22px] mb-0.5"
             style={currentTab === 'children' ? { fontVariationSettings: "'FILL' 1" } : {}}
           >
-            child_care
+            group
           </span>
-          <span className="text-[11px] font-semibold">Children</span>
+          <span className="text-[11px]">Anak</span>
+          {currentTab === 'children' && (
+            <span className="absolute bottom-0 w-8 h-0.5 bg-[#004ccd] rounded-full"></span>
+          )}
         </button>
 
         <button
           id="nav-mobile-pricing"
           onClick={() => onSelectTab('pricing')}
-          className={`flex flex-col items-center justify-center px-3 py-1 rounded-xl transition-all scale-95 active:scale-90 w-1/4 cursor-pointer ${
+          className={`flex flex-col items-center justify-center px-2 py-1 rounded-xl transition-all scale-95 active:scale-90 w-1/4 cursor-pointer relative ${
             currentTab === 'pricing'
-              ? 'bg-[#0f62fe] text-white shadow-xs'
-              : 'text-[#424656] hover:bg-[#f2f3ff]'
+              ? 'text-[#004ccd] font-bold'
+              : 'text-[#424656] hover:text-[#191b24]'
           }`}
         >
           <span
@@ -129,9 +137,13 @@ export const MobileNav: React.FC<MobileNavProps> = ({
           >
             settings
           </span>
-          <span className="text-[11px] font-semibold">Settings</span>
+          <span className="text-[11px]">Pengaturan</span>
+          {currentTab === 'pricing' && (
+            <span className="absolute bottom-0 w-8 h-0.5 bg-[#004ccd] rounded-full"></span>
+          )}
         </button>
       </nav>
     </>
   );
 };
+

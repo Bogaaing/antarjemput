@@ -15,11 +15,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onLogout,
 }) => {
   const navItems = [
-    { id: 'calendar' as TabType, label: 'Calendar', icon: 'calendar_today' },
-    { id: 'history' as TabType, label: 'History', icon: 'history' },
-    { id: 'children' as TabType, label: 'Children', icon: 'child_care' },
-    { id: 'reports' as TabType, label: 'Reports', icon: 'assessment' },
-    { id: 'pricing' as TabType, label: 'Pricing Rules', icon: 'receipt_long' },
+    { id: 'calendar' as TabType, label: 'Kalender', icon: 'calendar_today' },
+    { id: 'history' as TabType, label: 'Riwayat', icon: 'history' },
+    { id: 'children' as TabType, label: 'Anak', icon: 'group' },
+    { id: 'reports' as TabType, label: 'Laporan', icon: 'assessment' },
+    { id: 'pricing' as TabType, label: 'Pengaturan', icon: 'settings' },
   ];
 
   return (
