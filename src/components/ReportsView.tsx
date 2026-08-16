@@ -65,12 +65,12 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
         </div>
 
         <div className="bg-white p-5 rounded-xl border border-[#E2E8F0] shadow-xs">
-          <p className="text-[12px] font-semibold text-[#737687] uppercase">Rasio Waktu Jemput</p>
+          <p className="text-[12px] font-semibold text-[#737687] uppercase">Rasio Kepulangan</p>
           <p className="text-[24px] font-bold text-[#191b24] mt-1">
-            {records.length > 0 ? Math.round((normalTrips / records.length) * 100) : 0}% Normal
+            {records.length > 0 ? Math.round((normalTrips / records.length) * 100) : 0}% Siang
           </p>
           <p className="text-[12px] text-[#b45309] mt-2">
-            {extraTrips} Hari dengan jam kepulangan berbeda
+            {extraTrips} Hari dengan kepulangan Sore
           </p>
         </div>
       </div>

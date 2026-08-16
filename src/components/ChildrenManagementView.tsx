@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Child } from '../types';
+import { Child, getReturnPeriod } from '../types';
 
 interface ChildrenManagementViewProps {
   childrenList: Child[];
@@ -234,16 +234,18 @@ export const ChildrenManagementView: React.FC<ChildrenManagementViewProps> = ({
                     <p className="text-[11px] text-[#64748B] font-medium pt-0.5">Senin - Jumat</p>
                   </div>
 
-                  {/* JEMPUT Box */}
+                  {/* PULANG Box */}
                   <div className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-2xl p-3.5 space-y-1">
                     <div className="flex items-center gap-1.5 text-[#0D9488]">
                       <span className="material-symbols-outlined text-[16px]">two_wheeler</span>
                       <span className="text-[11px] font-extrabold uppercase tracking-wider">
-                        JEMPUT
+                        PULANG
                       </span>
                     </div>
-                    <p className="text-[24px] sm:text-[28px] font-extrabold text-[#191b24] tracking-tight leading-none pt-1">
-                      {child.defaultDropoffTime}
+                    <p className="text-[22px] sm:text-[26px] font-extrabold text-[#191b24] tracking-tight leading-none pt-1">
+                      {getReturnPeriod(child.defaultDropoffPeriod || child.defaultDropoffTime) === 'sore'
+                        ? 'Sore'
+                        : 'Siang'}
                     </p>
                     <p className="text-[11px] text-[#64748B] font-medium pt-0.5">Senin - Jumat</p>
                   </div>

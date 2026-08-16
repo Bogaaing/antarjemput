@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Child } from '../types';
+import { Child, ReturnPeriod, getReturnPeriod, getReturnPeriodTime } from '../types';
 
 interface ChildEditModalProps {
   child?: Child | null;
@@ -22,7 +22,9 @@ export const ChildEditModal: React.FC<ChildEditModalProps> = ({
       'https://lh3.googleusercontent.com/aida-public/AB6AXuDHNlB89wCdgPHMwr3buo-DaIJ7cYy1_oXgCKOTI1dEczo-6GRSynqTuIVIXgVulCE72DP0_LYFlIu-clLX5231aYVMpfNjHlXu092DhLMy1ZWPxvQ-d43aFZmfi7eWOC_DlWqG-snUtUuUcnHf2ZqjMRq-i9oZ7E_yEJeyxaGjlyLzOBLeZzP4hU7N5oMkmPgKMR5dzxnsMsGkcT-gSwucEf9EINFNPEXcyBVz4qNJfLnF-ZsRKGRZsA'
   );
   const [defaultPickupTime, setDefaultPickupTime] = useState(child?.defaultPickupTime || '07:00');
-  const [defaultDropoffTime, setDefaultDropoffTime] = useState(child?.defaultDropoffTime || '12:00');
+  const [defaultPeriod, setDefaultPeriod] = useState<ReturnPeriod>(
+    child?.defaultDropoffPeriod || getReturnPeriod(child?.defaultDropoffTime)
+  );
   const [school, setSchool] = useState(child?.school || 'SD Al-fath BSD');
   const [notes, setNotes] = useState(child?.notes || '');
 
@@ -73,7 +75,8 @@ export const ChildEditModal: React.FC<ChildEditModalProps> = ({
       roleTag: roleTag.trim() || 'Kakak',
       avatarUrl,
       defaultPickupTime,
-      defaultDropoffTime,
+      defaultDropoffTime: getReturnPeriodTime(defaultPeriod),
+      defaultDropoffPeriod: defaultPeriod,
       school: school.trim() || undefined,
       notes: notes.trim() || undefined,
     });
@@ -264,7 +267,7 @@ export const ChildEditModal: React.FC<ChildEditModalProps> = ({
             </div>
           </div>
 
-          {/* Section 2: Jadwal Default */}
+          {/* Section 2: Jadwal Default (Siang / Sore) */}
           <div className="space-y-4 pt-3 border-t border-[#E2E8F0]">
             <h4 className="text-[14px] font-bold text-[#004ccd] tracking-tight">
               Jadwal Default
@@ -313,24 +316,41 @@ export const ChildEditModal: React.FC<ChildEditModalProps> = ({
               </div>
             </div>
 
-            {/* Jemput dari sekolah */}
+            {/* Pulang dari sekolah: Siang / Sore */}
             <div className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-2xl p-4 space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className="material-symbols-outlined text-[#0D9488] text-[20px]">
                     two_wheeler
                   </span>
-                  <span className="text-[13px] font-bold text-[#191b24]">Jemput dari sekolah</span>
+                  <span className="text-[13px] font-bold text-[#191b24]">Pulang dari sekolah</span>
                 </div>
 
-                <div className="bg-[#ECFDF5] text-[#047857] border border-[#A7F3D0] px-3 py-1 rounded-xl text-[14px] font-extrabold flex items-center gap-1">
-                  <input
-                    type="time"
-                    value={defaultDropoffTime}
-                    onChange={(e) => setDefaultDropoffTime(e.target.value)}
-                    className="bg-transparent text-[#047857] font-extrabold outline-none cursor-pointer"
-                    required
-                  />
+                {/* Segmented Selection: Siang vs Sore */}
+                <div className="flex gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => setDefaultPeriod('siang')}
+                    className={`px-3 py-1 rounded-xl text-[12px] font-bold transition-all cursor-pointer ${
+                      defaultPeriod === 'siang'
+                        ? 'bg-[#004ccd] text-white shadow-xs'
+                        : 'bg-white text-[#64748B] border border-[#CBD5E1] hover:bg-[#F1F5F9]'
+                    }`}
+                  >
+                    ☀ Siang (12:00)
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setDefaultPeriod('sore')}
+                    className={`px-3 py-1 rounded-xl text-[12px] font-bold transition-all cursor-pointer ${
+                      defaultPeriod === 'sore'
+                        ? 'bg-[#004ccd] text-white shadow-xs'
+                        : 'bg-white text-[#64748B] border border-[#CBD5E1] hover:bg-[#F1F5F9]'
+                    }`}
+                  >
+                    🌇 Sore (15:00)
+                  </button>
                 </div>
               </div>
 

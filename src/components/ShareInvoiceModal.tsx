@@ -30,12 +30,12 @@ Berikut adalah rekap layanan antar-jemput anak untuk bulan *${monthName}*:
 
 📋 *Ringkasan Layanan:*
 • Total Hari Layanan: ${records.length} Hari
-• Hari Normal: ${normalDays} Hari
-• Hari Tambahan (Beda Jam/Weekend): ${extraDays} Hari
+• Hari Normal (Siang): ${normalDays} Hari
+• Hari Tambahan (Sore): ${extraDays} Hari
 
 💰 *Rincian Keuangan:*
 • Biaya Dasar: ${formatRupiah(baseTotal)}
-• Biaya Tambahan: ${formatRupiah(extraTotal)}
+• Biaya Tambahan Sore: ${formatRupiah(extraTotal)}
 *TOTAL TAGIHAN: ${formatRupiah(grandTotal)}*
 
 💳 *Status Pembayaran:*

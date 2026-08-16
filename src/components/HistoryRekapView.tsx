@@ -262,8 +262,12 @@ export const HistoryRekapView: React.FC<HistoryRekapViewProps> = ({
                           </span>
                           <span className="text-[#CBD5E1]">|</span>
                           <span className="flex items-center gap-1">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#F59E0B]"></span>
-                            <span>Jemput {dropoffTimes}</span>
+                            <span
+                              className={`w-1.5 h-1.5 rounded-full ${
+                                hasExtra ? 'bg-[#F59E0B]' : 'bg-[#004ccd]'
+                              }`}
+                            ></span>
+                            <span>Pulang {hasExtra ? 'Sore' : 'Siang'}</span>
                           </span>
                         </div>
                       </div>
@@ -282,7 +286,7 @@ export const HistoryRekapView: React.FC<HistoryRekapViewProps> = ({
                         {formatRupiah(rec.totalFee)}
                       </p>
                       <p className="text-[11px] text-[#64748B] font-medium">
-                        {hasExtra ? 'Tarif + Tambahan' : 'Tarif Dasar'}
+                        {hasExtra ? 'Tarif + Tambahan Sore' : 'Tarif Normal'}
                       </p>
                     </div>
 

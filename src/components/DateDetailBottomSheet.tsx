@@ -1,5 +1,5 @@
 import React from 'react';
-import { DailyTransportRecord, Child, formatRupiah, formatDateIndo } from '../types';
+import { DailyTransportRecord, Child, formatRupiah, formatDateIndo, getReturnPeriod } from '../types';
 
 interface DateDetailBottomSheetProps {
   dateStr: string;
@@ -81,9 +81,11 @@ export const DateDetailBottomSheet: React.FC<DateDetailBottomSheetProps> = ({
                         </div>
 
                         <div className="flex justify-between items-center bg-white px-3 py-1.5 rounded-lg border border-[#E2E8F0]">
-                          <span className="text-[#64748B]">Jemput</span>
+                          <span className="text-[#64748B]">Pulang</span>
                           <span className="font-bold text-[#191b24]">
-                            {childSchedule.dropoffTime}
+                            {getReturnPeriod(childSchedule.dropoffPeriod || childSchedule.dropoffTime) === 'sore'
+                              ? 'Sore'
+                              : 'Siang'}
                           </span>
                         </div>
                       </div>
@@ -98,6 +100,11 @@ export const DateDetailBottomSheet: React.FC<DateDetailBottomSheetProps> = ({
                   <p className="text-[12px] text-[#64748B] font-medium">Biaya</p>
                   <p className="text-[22px] font-bold text-[#004ccd] tracking-tight">
                     {formatRupiah(record.totalFee)}
+                  </p>
+                  <p className="text-[11px] text-[#64748B] font-medium mt-0.5">
+                    {record.additionalFee > 0 || record.hasDifferentDropoff
+                      ? 'Tarif normal Rp50k + Tambahan sore Rp15k'
+                      : 'Tarif normal (Pulang Siang)'}
                   </p>
                 </div>
 

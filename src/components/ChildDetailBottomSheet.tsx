@@ -1,5 +1,5 @@
 import React from 'react';
-import { Child } from '../types';
+import { Child, getReturnPeriod } from '../types';
 
 interface ChildDetailBottomSheetProps {
   child: Child;
@@ -80,7 +80,7 @@ export const ChildDetailBottomSheet: React.FC<ChildDetailBottomSheetProps> = ({
               </div>
             </div>
 
-            {/* Jemput Node */}
+            {/* Jemput / Pulang Node */}
             <div className="relative">
               <span className="absolute -left-6 top-1 w-3 h-3 rounded-full bg-[#0D9488] ring-4 ring-white"></span>
               <div className="flex items-center justify-between gap-3 bg-[#F8FAFC] border border-[#E2E8F0] rounded-2xl p-3.5">
@@ -89,9 +89,11 @@ export const ChildDetailBottomSheet: React.FC<ChildDetailBottomSheetProps> = ({
                     two_wheeler
                   </span>
                   <div>
-                    <p className="text-[12px] font-semibold text-[#64748B]">Jemput dari sekolah</p>
+                    <p className="text-[12px] font-semibold text-[#64748B]">Pulang dari sekolah</p>
                     <p className="text-[20px] font-extrabold text-[#191b24] leading-tight">
-                      {child.defaultDropoffTime}
+                      {getReturnPeriod(child.defaultDropoffPeriod || child.defaultDropoffTime) === 'sore'
+                        ? 'Sore (15:00)'
+                        : 'Siang (12:00)'}
                     </p>
                     <p className="text-[11px] text-[#94A3B8] font-medium mt-0.5">Senin - Jumat</p>
                   </div>

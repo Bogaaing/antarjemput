@@ -297,12 +297,12 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
         <div className="p-3 bg-[#F8FAFC] border-t border-[#E2E8F0] flex flex-wrap items-center justify-around gap-y-2 gap-x-4 text-[12px] font-medium text-[#475569]">
           <div className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full bg-[#004ccd]"></span>
-            <span>Normal (Rp50.000)</span>
+            <span>Normal Siang (Rp50.000)</span>
           </div>
 
           <div className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full bg-[#F59E0B]"></span>
-            <span>Tambahan (Rp65.000)</span>
+            <span>Tambahan Sore (Rp65.000)</span>
           </div>
 
           <div className="flex items-center gap-1 text-[#198754] font-semibold">

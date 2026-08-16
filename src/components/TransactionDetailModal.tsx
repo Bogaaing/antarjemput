@@ -1,5 +1,5 @@
 import React from 'react';
-import { DailyTransportRecord, Child, formatRupiah, formatDateIndo } from '../types';
+import { DailyTransportRecord, Child, formatRupiah, formatDateIndo, getReturnPeriod } from '../types';
 
 interface TransactionDetailModalProps {
   record: DailyTransportRecord;
@@ -163,10 +163,12 @@ export const TransactionDetailModal: React.FC<TransactionDetailModalProps> = ({
                           <span className="material-symbols-outlined text-[18px] text-[#006a68]">
                             two_wheeler
                           </span>
-                          <span className="text-[13px] font-medium">Jemput</span>
+                          <span className="text-[13px] font-medium">Pulang</span>
                         </div>
                         <span className="font-semibold text-[#191b24] text-[14px]">
-                          {childSchedule.dropoffTime}
+                          {getReturnPeriod(childSchedule.dropoffPeriod || childSchedule.dropoffTime) === 'sore'
+                            ? 'Sore'
+                            : 'Siang'}
                         </span>
                       </div>
                     </div>
@@ -189,7 +191,7 @@ export const TransactionDetailModal: React.FC<TransactionDetailModalProps> = ({
                   <div className="w-8 h-8 rounded-full bg-[#ecedfa] flex items-center justify-center text-[#424656]">
                     <span className="material-symbols-outlined text-[18px]">directions_car</span>
                   </div>
-                  <span className="text-[15px] text-[#191b24]">Biaya Dasar PP</span>
+                  <span className="text-[15px] text-[#191b24]">Tarif Normal (PP)</span>
                 </div>
                 <span className="text-[15px] font-semibold text-[#191b24]">
                   {formatRupiah(record.baseFee)}
@@ -204,7 +206,7 @@ export const TransactionDetailModal: React.FC<TransactionDetailModalProps> = ({
                     </div>
                     <div>
                       <span className="text-[15px] text-[#191b24] block">
-                        Tambahan (Jemput Siang / Beda Jam)
+                        Tambahan Kepulangan Sore
                       </span>
                       {record.notes && (
                         <span className="text-[12px] text-[#737687]">{record.notes}</span>

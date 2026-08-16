@@ -255,14 +255,14 @@ ALTER TABLE public.payments ENABLE ROW LEVEL SECURITY;`;
               </p>
             </div>
 
-            {/* Tambahan Beda Jam Field */}
+            {/* Tambahan Sore Field */}
             <div className="flex flex-col gap-2">
               <label
                 className="text-[12px] font-semibold text-[#424656] flex items-center gap-2 uppercase tracking-wider"
                 htmlFor="tambahan-beda-jam"
               >
                 <span className="material-symbols-outlined text-lg">schedule</span>
-                Tambahan Beda Jam
+                Tambahan Kepulangan Sore
               </label>
               <div className="relative">
                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#424656] font-semibold text-[15px]">
@@ -280,7 +280,7 @@ ALTER TABLE public.payments ENABLE ROW LEVEL SECURITY;`;
                 />
               </div>
               <p className="text-[12px] text-[#737687]">
-                Biaya tambahan yang dikenakan jika salah satu anak pulang di jam yang berbeda.
+                Biaya tambahan per hari yang dikenakan jika salah satu atau semua anak pulang di waktu Sore.
               </p>
             </div>
 
@@ -311,11 +311,10 @@ ALTER TABLE public.payments ENABLE ROW LEVEL SECURITY;`;
               </span>
               <div>
                 <p className="text-[14px] text-[#191b24] font-medium">
-                  {description || 'Tambahan otomatis diterapkan jika jam jemput anak berbeda.'}
+                  {description || 'Tarif normal Rp50.000 / hari (Siang) + Tambahan Rp15.000 / hari (Sore).'}
                 </p>
                 <p className="text-[12px] text-[#424656] mt-1">
-                  Contoh: Jika Abid pulang jam 12:00 dan Dhabit pulang jam 15:00, tagihan hari tersebut otomatis
-                  menjadi {formatRupiah(baseFee + differentHoursFee)}.
+                  Contoh: Jika semua anak pulang Siang, total tarif harian adalah {formatRupiah(baseFee)}. Jika ada anak yang pulang Sore, total tarif harian menjadi {formatRupiah(baseFee + differentHoursFee)} flat per hari.
                 </p>
               </div>
             </div>

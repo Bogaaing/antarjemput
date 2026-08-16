@@ -1,5 +1,13 @@
 import { supabase, isSupabaseConfigured } from './client';
-import { Child, DailyTransportRecord, PricingRules, UserProfile, ChildDailySchedule } from '../../types';
+import {
+  Child,
+  DailyTransportRecord,
+  PricingRules,
+  UserProfile,
+  ChildDailySchedule,
+  getReturnPeriod,
+  calculateDailyFee,
+} from '../../types';
 
 interface ProfileRow {
   id: string;
@@ -233,6 +241,7 @@ export async function fetchChildrenFromDB(userId: string): Promise<Child[]> {
       `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(row.name)}`,
     defaultPickupTime: row.default_pickup || '07:00',
     defaultDropoffTime: row.default_dropoff || '12:00',
+    defaultDropoffPeriod: getReturnPeriod(row.default_dropoff),
     school: row.school || 'SD Al-fath Bsd',
     notes: row.notes || '',
   }));
@@ -475,14 +484,18 @@ export async function createTransportRecordInDB(
   // 2. Fetch active pricing rule to calculate on server/database side
   const pricing = await fetchPricingRulesFromDB(userId);
 
-  // Determine if different dropoff times exist
+  // Determine pricing based on Siang (50k) / Sore (65k) rule
   const attendingKids = record.children.filter((c) => c.isAttending);
-  const uniqueDropoffs = new Set(attendingKids.map((c) => c.dropoffTime));
-  const hasDifferent = attendingKids.length > 1 && uniqueDropoffs.size > 1;
+  const feeCalc = calculateDailyFee(
+    attendingKids.map((c) => ({ dropoffTime: c.dropoffTime, dropoffPeriod: c.dropoffPeriod })),
+    pricing.baseFeePP,
+    pricing.differentHoursFee
+  );
 
-  const baseFee = pricing.baseFeePP;
-  const additionalFee = hasDifferent ? pricing.differentHoursFee : 0;
-  const totalFee = baseFee + additionalFee;
+  const baseFee = feeCalc.baseFee;
+  const additionalFee = feeCalc.additionalFee;
+  const totalFee = feeCalc.totalFee;
+  const hasDifferent = feeCalc.hasSore;
 
   // 3. Insert header record
   const { data: recData, error: recError } = await supabase
@@ -576,12 +589,16 @@ export async function updateTransportRecordInDB(
 
   if (record.children) {
     const attendingKids = record.children.filter((c) => c.isAttending);
-    const uniqueDropoffs = new Set(attendingKids.map((c) => c.dropoffTime));
-    hasDifferent = attendingKids.length > 1 && uniqueDropoffs.size > 1;
+    const feeCalc = calculateDailyFee(
+      attendingKids.map((c) => ({ dropoffTime: c.dropoffTime, dropoffPeriod: c.dropoffPeriod })),
+      pricing.baseFeePP,
+      pricing.differentHoursFee
+    );
 
-    baseFee = pricing.baseFeePP;
-    additionalFee = hasDifferent ? pricing.differentHoursFee : 0;
-    totalFee = baseFee + additionalFee;
+    baseFee = feeCalc.baseFee;
+    additionalFee = feeCalc.additionalFee;
+    totalFee = feeCalc.totalFee;
+    hasDifferent = feeCalc.hasSore;
   }
 
   const updateHeader: Record<string, unknown> = {
